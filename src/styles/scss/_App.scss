@@ -1,3 +1,16 @@
 body {
-  font: 1.6rem 'Roboto', sans-serif;
+  font: 2rem 'Roboto', sans-serif;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }

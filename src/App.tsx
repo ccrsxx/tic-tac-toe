@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { Header, Footer } from './components';
 
 export function App() {
   return (
     <div className='App'>
-      <h1>Hello World</h1>
+      <Header />
+      <Footer />
     </div>
   );
 }

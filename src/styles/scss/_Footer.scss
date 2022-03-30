@@ -1,0 +1,24 @@
+.footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  place-content: center;
+
+  p {
+    font-size: 1.8rem;
+    padding: 2rem;
+
+    a {
+      text-decoration: underline transparent;
+      text-underline-position: under;
+      transition: 200ms ease-out;
+
+      &:hover {
+        color: crimson;
+        text-decoration-color: lightcoral;
+      }
+    }
+  }
+}
