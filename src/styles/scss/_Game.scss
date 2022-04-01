@@ -1,5 +1,95 @@
 .game {
-  width: 50rem;
-  height: 50rem;
-  border: 1px solid gray;
+  width: 70rem;
+  border: var(--border);
+  border-radius: var(--border-radius);
+
+  .game-board {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem;
+    color: #70757a;
+
+    .game-mode {
+      .mode {
+        font-family: inherit;
+        font-weight: bold;
+        color: inherit;
+        border: 0;
+        font-size: 1.6rem;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .game-score {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+
+      .player-card {
+        width: 20rem;
+        display: flex;
+        justify-content: space-between;
+        padding: 0.7rem 3rem;
+        border: var(--border);
+        border-radius: var(--border-radius);
+        font-weight: bold;
+        font-size: 1.8rem;
+        box-shadow: 0 2px 2.5px rgb(0 0 0 / 8%);
+
+        &.active {
+          border-bottom: 3px solid var(--game-bg);
+          box-shadow: 0 4px 5px rgb(0 0 0 / 16%);
+        }
+
+        .player-name {
+          color: black;
+        }
+      }
+    }
+  }
+
+  .game-status {
+    margin: auto;
+    font-size: 1.3rem;
+    color: #70757a;
+  }
+
+  .game-container {
+    padding: 3rem;
+    background-color: var(--game-bg);
+
+    .square-container {
+      width: 24rem;
+      height: 24rem;
+      display: grid;
+      grid-template-columns: repeat(3, 8rem);
+      grid-template-rows: repeat(3, 8rem);
+      overflow: hidden;
+      margin: auto;
+
+      .square-box {
+        outline: 3.5px solid var(--square-border);
+      }
+    }
+  }
+
+  .restart-button {
+    width: 100%;
+    font-size: 1.6rem;
+    padding: 1rem 3rem;
+    font-weight: bold;
+    color: #14bdac;
+    transition: 200ms ease-out;
+    border-bottom-right-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+
+    &:hover {
+      background-color: lightgreen;
+      color: white;
+    }
+  }
 }
