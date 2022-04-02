@@ -1,3 +1,5 @@
 export * from './Header';
-export * from './Footer';
 export * from './Game';
+export * from './GameBoard';
+export * from './GameContainer';
+export * from './Footer';

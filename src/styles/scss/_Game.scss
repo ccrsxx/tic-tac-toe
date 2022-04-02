@@ -39,10 +39,10 @@
         font-weight: bold;
         font-size: 1.8rem;
         box-shadow: 0 2px 2.5px rgb(0 0 0 / 8%);
+        transition: box-shadow 300ms ease-in-out;
 
         &.active {
-          border-bottom: 3px solid var(--game-bg);
-          box-shadow: 0 4px 5px rgb(0 0 0 / 16%);
+          box-shadow: 0 4px 5px rgb(0 0 0 / 16%), 0 -2px var(--game-bg) inset;
         }
 
         .player-name {
@@ -56,9 +56,23 @@
     margin: auto;
     font-size: 1.3rem;
     color: #70757a;
+
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+
+    &.active {
+      opacity: 0.5;
+    }
+
+    span {
+      color: black;
+      font-weight: bold;
+    }
   }
 
   .game-container {
+    display: grid;
+    place-content: center;
     padding: 3rem;
     background-color: var(--game-bg);
 
@@ -69,15 +83,28 @@
       grid-template-columns: repeat(3, 8rem);
       grid-template-rows: repeat(3, 8rem);
       overflow: hidden;
-      margin: auto;
 
       .square-box {
+        cursor: pointer;
+        display: grid;
+        place-content: center;
         outline: 3.5px solid var(--square-border);
+        font-size: 6rem;
+        font-weight: bold;
+
+        .square {
+          opacity: 0;
+          transition: opacity 300ms ease-in-out;
+
+          &.active {
+            opacity: 1;
+          }
+        }
       }
     }
   }
 
-  .restart-button {
+  .restart-game {
     width: 100%;
     font-size: 1.6rem;
     padding: 1rem 3rem;

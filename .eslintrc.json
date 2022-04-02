@@ -29,11 +29,15 @@
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
     "jsx-quotes": ["error", "prefer-single"],
     "no-console": "warn",
     "linebreak-style": "off",
     "no-nested-ternary": "off",
     "react/self-closing-comp": "warn",
+    "react/no-array-index-key": "off",
+    "import/no-cycle": "off",
     "import/prefer-default-export": "off"
   }
 }
