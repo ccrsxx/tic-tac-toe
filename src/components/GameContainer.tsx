@@ -21,13 +21,53 @@ function SquareBox({ square, handleClick }: SquareBoxProps) {
 
 interface GameContainerProps {
   gameBoard: string[];
+  gameWinner: string;
+  gameOver: boolean;
+  gameBoardKey: number;
   handleClick: (index: number) => () => void;
+  resetGame: (isRestarted?: boolean) => void;
 }
 
-export function GameContainer({ gameBoard, handleClick }: GameContainerProps) {
+export function GameContainer({
+  gameBoard,
+  gameWinner,
+  gameOver,
+  gameBoardKey,
+  resetGame,
+  handleClick
+}: GameContainerProps) {
+  const [xColor, oColor] = [{ color: '#545454' }, { color: '#f2ebd3' }];
   return (
-    <div className='game-container'>
-      <div className='square-container'>
+    <div
+      style={gameWinner ? { cursor: 'pointer', zIndex: '1' } : undefined}
+      className='game-container'
+      onClick={gameWinner ? () => resetGame(true) : undefined}
+    >
+      <div
+        style={{ display: gameOver ? 'block' : 'none' }}
+        className='game-over'
+      >
+        <h2 className='game-winner'>
+          {gameWinner === 'draw' ? (
+            <>
+              <span style={xColor}>X</span>
+              <span style={oColor}>O</span>
+            </>
+          ) : gameWinner === 'X' ? (
+            <span style={xColor}>X</span>
+          ) : (
+            <span style={oColor}>O</span>
+          )}
+        </h2>
+        <h3 className='game-text'>
+          {gameWinner === 'draw' ? 'DRAW!' : 'WINNER!'}
+        </h3>
+      </div>
+      <div
+        style={{ display: gameOver ? 'none' : 'grid' }}
+        className='square-container'
+        key={gameBoardKey}
+      >
         {gameBoard.map((square, index) => (
           <SquareBox
             key={index}
