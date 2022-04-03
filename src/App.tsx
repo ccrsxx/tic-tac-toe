@@ -9,18 +9,56 @@ export function App() {
   const [gameWinner, setGameWinner] = useState('');
   const [nextPlayer, setNextPlayer] = useState('X');
 
+  useEffect(() => {
+    if (!gameWinner) calculateWinner();
+  }, [gameBoard]);
+
   const handleMode = ({
     target: { value }
   }: React.ChangeEvent<HTMLSelectElement>) => setGameMode(value);
 
   const handleClick = (index: number) => () => {
-    if (gameBoard[index] || gameWinner) return;
+    if (gameWinner || gameBoard[index]) return;
 
     const newGameBoard = [...gameBoard];
     newGameBoard[index] = nextPlayer;
 
     setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
     setGameBoard(newGameBoard);
+  };
+
+  const calculateWinner = () => {
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+
+    const indexWinner = winningCombinations.find((combination) => {
+      const [a, b, c] = combination;
+      return (
+        gameBoard[a] &&
+        gameBoard[a] === gameBoard[b] &&
+        gameBoard[a] === gameBoard[c]
+      );
+    });
+
+    const winner = indexWinner ? gameBoard[indexWinner[0]] : null;
+
+    if (winner) {
+      setGameWinner(winner);
+
+      gameWinner === 'X'
+        ? setPlayerScore(playerScore + 1)
+        : setComputerScore(computerScore + 1);
+    } else if (gameBoard.every((square) => square)) {
+      setGameWinner('draw');
+    }
   };
 
   const resetGame = () => {

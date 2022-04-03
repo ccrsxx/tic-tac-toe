@@ -47,7 +47,7 @@ export function GameBoard({
           <p className='player-score'>{!computerScore ? '_' : computerScore}</p>
         </div>
       </div>
-      <p className='game-status active'>
+      <p className='game-status active' key={Date.now()}>
         {gameBoard.every((square) => !square) ? (
           'Start game or select player'
         ) : gameWinner ? (
