@@ -1,9 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Header, Game, Footer } from './components';
+import { getNormalMove, getSmartMove, calculateWinner } from './common';
 
 export function App() {
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
+  const [computerPlayer, setComputerPlayer] = useState('O');
   const [gameMode, setGameMode] = useState('normal');
   const [gameBoard, setGameBoard] = useState(Array(9).fill(''));
   const [gameWinner, setGameWinner] = useState('');
@@ -11,15 +13,48 @@ export function App() {
   const [nextPlayer, setNextPlayer] = useState('X');
   const [isRestarted, setIsRestarted] = useState(false);
 
+  useEffect(() => {
+    if (!gameWinner && gameMode !== 'friend' && nextPlayer === computerPlayer) {
+      const newGameBoard = [...gameBoard];
+
+      const computerMove =
+        gameMode === 'impossible'
+          ? getSmartMove(newGameBoard, computerPlayer)
+          : getNormalMove(newGameBoard);
+
+      newGameBoard[computerMove] = computerPlayer;
+
+      setTimeout(() => {
+        setGameBoard(newGameBoard);
+        checkWinner(newGameBoard);
+      }, 500);
+    }
+  }, [computerPlayer, gameMode, gameBoard, gameWinner, nextPlayer]);
+
   const handleMode = ({
     target: { value }
   }: React.ChangeEvent<HTMLSelectElement>) => {
     setGameMode(value);
-    resetGame(true);
+    setComputerPlayer('O');
+    resetGame();
+  };
+
+  const handlePlayer = (newPlayer: string) => {
+    const player = newPlayer === 'X' ? 'O' : 'X';
+
+    if (computerPlayer === player) return;
+
+    setComputerPlayer(player);
+    resetGame(undefined, player === 'O' ? 'X' : undefined);
   };
 
   const handleClick = (index: number) => () => {
-    if (gameWinner || gameBoard[index]) return;
+    if (
+      gameWinner ||
+      gameBoard[index] ||
+      (nextPlayer === computerPlayer && gameMode !== 'friend')
+    )
+      return;
 
     const newGameBoard = [...gameBoard];
     newGameBoard[index] = nextPlayer;
@@ -29,68 +64,47 @@ export function App() {
   };
 
   const checkWinner = (newGameBoard: string[]) => {
-    if (newGameBoard.every((square) => square)) {
-      setGameWinner('draw');
-      highlightWinner([...Array(9).keys()]);
-      setTimeout(() => setGameOver(true), 600);
-    }
-
-    const winningCombinations = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ];
-
-    const indexWinner = winningCombinations.findIndex((combination) => {
-      const [a, b, c] = combination;
-      return (
-        newGameBoard[a] &&
-        newGameBoard[a] === newGameBoard[b] &&
-        newGameBoard[a] === newGameBoard[c]
-      );
-    });
-
-    const winner = indexWinner !== -1 ? winningCombinations[indexWinner] : null;
+    const winner = calculateWinner(newGameBoard) as number[];
 
     if (winner) {
       const winnerPlayer = newGameBoard[winner[0]];
+
+      winnerPlayer === 'X'
+        ? setPlayerScore((prevScore) => prevScore + 1)
+        : setComputerScore((prevScore) => prevScore + 1);
 
       setGameWinner(winnerPlayer);
       highlightWinner(winner);
 
       setTimeout(() => setGameOver(true), 600);
-
-      winnerPlayer === 'X'
-        ? setPlayerScore((prevScore) => prevScore + 1)
-        : setComputerScore((prevScore) => prevScore + 1);
+    } else if (newGameBoard.every((square) => square)) {
+      setGameWinner('draw');
+      highlightWinner([...Array(9).keys()]);
+      setTimeout(() => setGameOver(true), 600);
     } else setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
   };
 
-  const highlightWinner = (winnerIndex: number[]) => {
+  const highlightWinner = (winnerIndexes: number[]) => {
     const winnerSquares = document.querySelectorAll('.square-box');
 
     winnerSquares.forEach(
       (square, index) =>
-        winnerIndex.includes(index) && square.classList.add('active')
+        winnerIndexes.includes(index) && square.classList.add('active')
     );
   };
 
-  const resetGame = (softReset = false) => {
-    if (!softReset) {
+  const resetGame = (hardReset = false, newNextPlayer = 'X') => {
+    if (hardReset) {
       setPlayerScore(0);
       setComputerScore(0);
+      setComputerPlayer('O');
     }
 
-    setIsRestarted(!isRestarted);
     setGameBoard(Array(9).fill(''));
     setGameWinner('');
     setGameOver(false);
-    setNextPlayer('X');
+    setNextPlayer(newNextPlayer);
+    setIsRestarted(!isRestarted);
   };
 
   const [gameBoardKey, gameStatusKey] = [
@@ -104,6 +118,7 @@ export function App() {
       <Game
         playerScore={playerScore}
         computerScore={computerScore}
+        computerPlayer={computerPlayer}
         gameMode={gameMode}
         gameBoard={gameBoard}
         nextPlayer={nextPlayer}
@@ -112,6 +127,7 @@ export function App() {
         gameBoardKey={gameBoardKey}
         gameStatusKey={gameStatusKey}
         handleMode={handleMode}
+        handlePlayer={handlePlayer}
         handleClick={handleClick}
         resetGame={resetGame}
       />

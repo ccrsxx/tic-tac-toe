@@ -1,0 +1,85 @@
+.game-container {
+  cursor: default;
+  display: grid;
+  place-content: center;
+  padding: 3rem;
+  background-color: var(--game-bg);
+
+  .square-container {
+    width: 21rem;
+    height: 21rem;
+    display: grid;
+    grid-template-columns: repeat(3, 7rem);
+    grid-template-rows: repeat(3, 7rem);
+    overflow: hidden;
+
+    .square-box {
+      display: grid;
+      place-content: center;
+      outline: 3.5px solid transparent;
+      font-size: 5rem;
+      font-weight: bold;
+
+      animation: blend 300ms ease-in-out forwards;
+
+      @keyframes blend {
+        from {
+          outline-color: var(--game-bg);
+        }
+        to {
+          outline-color: var(--square-border);
+        }
+      }
+
+      .square {
+        opacity: 0;
+        transition: all 300ms ease-in-out;
+        transition-property: opacity, background-color;
+
+        &.active {
+          opacity: 1;
+        }
+      }
+
+      &.active {
+        .square {
+          text-align: center;
+          width: 6rem;
+          height: 6rem;
+          background-color: lightcoral;
+          border-radius: 1rem;
+          z-index: 5;
+        }
+      }
+    }
+  }
+
+  .game-over {
+    width: 21rem;
+    height: 21rem;
+    display: grid;
+    place-content: center;
+    text-align: center;
+
+    animation: fade 300ms ease-in-out forwards;
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .game-winner {
+      font-size: 15rem;
+      margin: -2rem;
+    }
+
+    .game-text {
+      font-size: 4rem;
+      color: #545454;
+    }
+  }
+}

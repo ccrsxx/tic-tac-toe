@@ -1,0 +1,77 @@
+.game-board {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+  color: #70757a;
+
+  .game-mode {
+    .mode {
+      font-family: inherit;
+      font-weight: bold;
+      color: inherit;
+      border: 0;
+      font-size: 1.6rem;
+      padding-right: 1rem;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .game-score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    .player-card {
+      width: 20rem;
+      display: flex;
+      justify-content: space-between;
+      padding: 0.7rem 3rem;
+      border: var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 2.5px rgb(0 0 0 / 8%);
+      font-weight: bold;
+      font-size: 1.8rem;
+      transition: box-shadow 300ms ease-in-out;
+
+      &.active {
+        animation: edge 300ms ease-in-out forwards;
+
+        @keyframes edge {
+          to {
+            box-shadow: 0 4px 5px rgb(0 0 0 / 16%), 0 -2px var(--game-bg) inset;
+          }
+        }
+      }
+
+      .player-name {
+        color: black;
+      }
+    }
+  }
+}
+
+.game-status {
+  margin: auto;
+  font-size: 1.3rem;
+  color: #70757a;
+
+  animation: fade 300ms ease-in-out;
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  span {
+    color: black;
+    font-weight: bold;
+  }
+}

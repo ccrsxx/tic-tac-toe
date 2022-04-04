@@ -25,7 +25,7 @@ interface GameContainerProps {
   gameOver: boolean;
   gameBoardKey: number;
   handleClick: (index: number) => () => void;
-  resetGame: (isRestarted?: boolean) => void;
+  resetGame: (hardRest?: boolean, newNextPlayer?: string) => void;
 }
 
 export function GameContainer({
@@ -37,11 +37,20 @@ export function GameContainer({
   handleClick
 }: GameContainerProps) {
   const [xColor, oColor] = [{ color: '#545454' }, { color: '#f2ebd3' }];
+  const containerProps = gameWinner
+    ? {
+        style: { cursor: 'pointer', zIndex: 1 },
+        resetGame: () => resetGame()
+      }
+    : {
+        style: undefined,
+        resetGame: undefined
+      };
   return (
     <div
-      style={gameWinner ? { cursor: 'pointer', zIndex: '1' } : undefined}
+      style={containerProps.style}
       className='game-container'
-      onClick={gameWinner ? () => resetGame(true) : undefined}
+      onClick={containerProps.resetGame}
     >
       <div
         style={{ display: gameOver ? 'block' : 'none' }}

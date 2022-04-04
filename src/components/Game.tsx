@@ -3,6 +3,7 @@ import { GameBoard, GameContainer } from '.';
 interface GameProps {
   playerScore: number;
   computerScore: number;
+  computerPlayer: string;
   gameMode: string;
   gameBoard: string[];
   gameWinner: string;
@@ -13,13 +14,15 @@ interface GameProps {
   handleMode: ({
     target: { value }
   }: React.ChangeEvent<HTMLSelectElement>) => void;
+  handlePlayer: (player: string) => void;
   handleClick: (index: number) => () => void;
-  resetGame: (isRestarted?: boolean) => void;
+  resetGame: (hardReset?: boolean, newNextPlayer?: string) => void;
 }
 
 export function Game({
   playerScore,
   computerScore,
+  computerPlayer,
   gameMode,
   gameBoard,
   gameWinner,
@@ -28,6 +31,7 @@ export function Game({
   gameBoardKey,
   gameStatusKey,
   handleMode,
+  handlePlayer,
   handleClick,
   resetGame
 }: GameProps) {
@@ -36,6 +40,7 @@ export function Game({
       <GameBoard
         playerScore={playerScore}
         computerScore={computerScore}
+        computerPlayer={computerPlayer}
         gameBoard={gameBoard}
         gameMode={gameMode}
         gameWinner={gameWinner}
@@ -43,6 +48,7 @@ export function Game({
         gameStatusKey={gameStatusKey}
         gameBoardKey={gameBoardKey}
         handleMode={handleMode}
+        handlePlayer={handlePlayer}
       />
       <GameContainer
         gameBoard={gameBoard}
@@ -55,7 +61,7 @@ export function Game({
       <button
         className='restart-game'
         type='button'
-        onClick={() => resetGame()}
+        onClick={() => resetGame(true)}
       >
         Restart game
       </button>
