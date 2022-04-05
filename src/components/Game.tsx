@@ -1,23 +1,5 @@
 import { GameBoard, GameContainer } from '.';
-
-interface GameProps {
-  playerScore: number;
-  computerScore: number;
-  computerPlayer: string;
-  gameMode: string;
-  gameBoard: string[];
-  gameWinner: string;
-  gameOver: boolean;
-  nextPlayer: string;
-  gameBoardKey: number;
-  gameStatusKey: number;
-  handleMode: ({
-    target: { value }
-  }: React.ChangeEvent<HTMLSelectElement>) => void;
-  handlePlayer: (player: string) => void;
-  handleClick: (index: number) => () => void;
-  resetGame: (hardReset?: boolean, newNextPlayer?: string) => void;
-}
+import { GameProps } from '../types';
 
 export function Game({
   playerScore,

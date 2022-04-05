@@ -4,18 +4,16 @@
   padding: 2rem;
   color: #70757a;
 
-  .game-mode {
-    .mode {
-      font-family: inherit;
-      font-weight: bold;
-      color: inherit;
-      border: 0;
-      font-size: 1.6rem;
-      padding-right: 1rem;
+  .game-mode > .mode {
+    font-family: inherit;
+    font-weight: bold;
+    color: inherit;
+    border: 0;
+    font-size: 1.6rem;
+    padding-right: 1rem;
 
-      &:focus {
-        outline: none;
-      }
+    &:focus {
+      outline: none;
     }
   }
 
@@ -37,10 +35,22 @@
       font-size: 1.8rem;
       transition: box-shadow 300ms ease-in-out;
 
-      &.active {
-        animation: edge 300ms ease-in-out forwards;
+      @media screen and (max-width: 480px) {
+        max-width: 17rem;
+      }
 
-        @keyframes edge {
+      @media screen and (max-width: 380px) {
+        max-width: 15rem;
+      }
+
+      @media screen and (max-width: 320px) {
+        max-width: 12rem;
+      }
+
+      &.active {
+        animation: fill 300ms ease-in-out forwards;
+
+        @keyframes fill {
           to {
             box-shadow: 0 4px 5px rgb(0 0 0 / 16%), 0 -2px var(--game-bg) inset;
           }
@@ -70,7 +80,7 @@
     }
   }
 
-  span {
+  .name {
     color: black;
     font-weight: bold;
   }

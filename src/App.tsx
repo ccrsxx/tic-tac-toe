@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Header, Game, Footer } from './components';
 import { getNormalMove, getSmartMove, calculateWinner } from './common';
 
@@ -79,17 +79,19 @@ export function App() {
       setTimeout(() => setGameOver(true), 600);
     } else if (newGameBoard.every((square) => square)) {
       setGameWinner('draw');
-      highlightWinner([...Array(9).keys()]);
+      highlightWinner([...Array(9).keys()], true);
+
       setTimeout(() => setGameOver(true), 600);
     } else setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
   };
 
-  const highlightWinner = (winnerIndexes: number[]) => {
+  const highlightWinner = (winnerIndexes: number[], draw = false) => {
     const winnerSquares = document.querySelectorAll('.square-box');
 
     winnerSquares.forEach(
       (square, index) =>
-        winnerIndexes.includes(index) && square.classList.add('active')
+        winnerIndexes.includes(index) &&
+        square.classList.add(draw ? 'draw' : 'winner')
     );
   };
 

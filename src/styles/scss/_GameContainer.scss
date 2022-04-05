@@ -5,6 +5,14 @@
   padding: 3rem;
   background-color: var(--game-bg);
 
+  .x-color {
+    color: #545454;
+  }
+
+  .o-color {
+    color: #f2ebd3;
+  }
+
   .square-container {
     width: 21rem;
     height: 21rem;
@@ -41,15 +49,21 @@
         }
       }
 
-      &.active {
-        .square {
-          text-align: center;
-          width: 6rem;
-          height: 6rem;
-          background-color: lightcoral;
-          border-radius: 1rem;
-          z-index: 5;
-        }
+      @mixin end-square($bg-color) {
+        display: grid;
+        place-content: center;
+        width: 5rem;
+        height: 5rem;
+        background-color: $bg-color;
+        border-radius: 1rem;
+      }
+
+      &.winner > .square {
+        @include end-square(lightcoral);
+      }
+
+      &.draw > .square {
+        @include end-square(coral);
       }
     }
   }

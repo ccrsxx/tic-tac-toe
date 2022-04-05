@@ -3,6 +3,11 @@
   border: var(--border);
   border-radius: var(--border-radius);
 
+  @media screen and (max-width: 720px) {
+    max-width: 70rem;
+    width: auto;
+  }
+
   .restart-game {
     width: 100%;
     font-size: 1.6rem;

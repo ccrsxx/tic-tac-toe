@@ -1,18 +1,4 @@
-interface GameBoardProps {
-  playerScore: number;
-  computerScore: number;
-  computerPlayer: string;
-  gameBoard: string[];
-  gameMode: string;
-  gameWinner: string;
-  nextPlayer: string;
-  gameStatusKey: number;
-  gameBoardKey: number;
-  handleMode: ({
-    target: { value }
-  }: React.ChangeEvent<HTMLSelectElement>) => void;
-  handlePlayer: (player: string) => void;
-}
+import { GameBoardProps } from '../types';
 
 export function GameBoard({
   playerScore,
