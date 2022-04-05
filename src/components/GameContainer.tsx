@@ -26,10 +26,10 @@ export function GameContainer({
   resetGame,
   handleClick
 }: GameContainerProps) {
-  const containerProps = gameWinner
+  const containerProps = gameOver
     ? {
         style: { cursor: 'pointer', zIndex: 1 },
-        resetGame: () => resetGame()
+        resetGame: () => resetGame(undefined, true)
       }
     : {
         style: undefined,

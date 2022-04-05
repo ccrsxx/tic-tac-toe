@@ -35,8 +35,7 @@ export function App() {
     target: { value }
   }: React.ChangeEvent<HTMLSelectElement>) => {
     setGameMode(value);
-    setComputerPlayer('O');
-    resetGame();
+    resetGame(undefined, true);
   };
 
   const handlePlayer = (newPlayer: string) => {
@@ -45,7 +44,7 @@ export function App() {
     if (computerPlayer === player) return;
 
     setComputerPlayer(player);
-    resetGame(undefined, player === 'O' ? 'X' : undefined);
+    resetGame(undefined, undefined, player === 'O' ? 'X' : undefined);
   };
 
   const handleClick = (index: number) => () => {
@@ -76,12 +75,12 @@ export function App() {
       setGameWinner(winnerPlayer);
       highlightWinner(winner);
 
-      setTimeout(() => setGameOver(true), 600);
+      setTimeout(() => setGameOver(true), 1000);
     } else if (newGameBoard.every((square) => square)) {
       setGameWinner('draw');
       highlightWinner([...Array(9).keys()], true);
 
-      setTimeout(() => setGameOver(true), 600);
+      setTimeout(() => setGameOver(true), 1000);
     } else setNextPlayer(nextPlayer === 'X' ? 'O' : 'X');
   };
 
@@ -95,12 +94,17 @@ export function App() {
     );
   };
 
-  const resetGame = (hardReset = false, newNextPlayer = 'X') => {
+  const resetGame = (
+    hardReset = false,
+    resetPlayer = false,
+    newNextPlayer = 'X'
+  ) => {
     if (hardReset) {
       setPlayerScore(0);
       setComputerScore(0);
-      setComputerPlayer('O');
     }
+
+    if (hardReset || resetPlayer) setComputerPlayer('O');
 
     setGameBoard(Array(9).fill(''));
     setGameWinner('');
