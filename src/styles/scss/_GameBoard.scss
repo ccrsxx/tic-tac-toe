@@ -24,7 +24,8 @@
     gap: 1rem;
 
     .player-card {
-      width: 20rem;
+      width: 100%;
+      max-width: 20rem;
       display: flex;
       justify-content: space-between;
       padding: 0.7rem 3rem;
@@ -34,18 +35,6 @@
       font-weight: bold;
       font-size: 1.8rem;
       transition: box-shadow 300ms ease-in-out;
-
-      @media screen and (max-width: 480px) {
-        max-width: 17rem;
-      }
-
-      @media screen and (max-width: 380px) {
-        max-width: 15rem;
-      }
-
-      @media screen and (max-width: 320px) {
-        max-width: 12rem;
-      }
 
       &.active {
         animation: fill 300ms ease-in-out forwards;

@@ -1,11 +1,11 @@
 .game {
-  width: 70rem;
+  width: 100%;
+  max-width: 70rem;
   border: var(--border);
   border-radius: var(--border-radius);
 
   @media screen and (max-width: 720px) {
-    max-width: 70rem;
-    width: auto;
+    max-width: 90vw;
   }
 
   .restart-game {
